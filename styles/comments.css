@@ -1,0 +1,89 @@
+#commentList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    max-height: 400px;
+
+    overflow: auto;
+}
+
+#commentList > li {
+    position: relative;
+
+    width: max-content;
+    padding: 5px 15px;
+    margin: 5px 10px 5px 0;
+
+    background-color: #e5e5e5;
+    border-radius: 12px;
+
+    font-size: 16px;
+    line-height: 24px;
+}
+
+#commentList > li::before {
+    content: "";
+
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    transform: translateX(50%) rotate(10deg);
+
+    width: auto;
+    height: auto;
+
+    /* background-color: red; */
+
+    border: 10px solid transparent;
+    border-left-color: #e5e5e5;
+    border-right: 0;
+    border-bottom: 0;
+    
+    box-sizing: border-box;
+}
+
+#commentInputGroup {
+    display: flex;
+
+    padding: 0 10px;
+    margin: 10px 0;
+    border: 1px solid #dedede;
+    border-radius: 1000px;
+}
+
+#commentInput {
+    border: 0;
+    background: none;
+    outline: none;
+
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+
+    font-size: 16px;
+}
+
+#commentButton {
+    flex-shrink: 0;
+    
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 0;
+
+    width: 40px;
+    height: 40px;
+
+    cursor: pointer;
+}
+
+#commentButton img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+}

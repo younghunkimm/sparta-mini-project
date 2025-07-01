@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 샘플</title>
+
+    <link rel="stylesheet" href="../styles/comments.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="module">
+        import { registerComment, loadComments } from '../js/comments.js';
+
+        // 등록 버튼
+        $('#commentButton').click(async function () {
+            const comment = $('#commentInput').val();
+            await registerComment(comment);
+
+            alert("댓글 등록이 완료되었습니다.");
+            window.location.reload();
+        });
+
+        // 댓글 가져오기
+        $('#commentList').empty();
+        await loadComments((row) => {
+            const id = row.id || "";
+            const comment = row.comment;
+            
+            const tempHtml = `<li data-id="${id}">${comment}</li>`;
+            $('#commentList').append(tempHtml);
+        });
+    </script>
+</head>
+
+<body>
+    <a href="?key=">메인</a>
+    <a href="?key=A">A</a>
+    <a href="?key=B">B</a>
+
+    <ul id="commentList">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+
+    <div id="commentInputGroup">
+        <input type="text" name="" id="commentInput" placeholder="댓글을 입력해주세요.">
+        <button type="button" id="commentButton"><img src="./images/icon_send.svg"></button>
+    </div>
+</body>
+
+</html>
