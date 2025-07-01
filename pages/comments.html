@@ -13,12 +13,12 @@
         import { registerComment, loadComments } from '../js/comments.js';
 
         const $commentList = $('#commentList');
-        const $commentInput = $('#commentButton');
         const $commentButton = $('#commentButton');
 
         // 등록 버튼
         $commentButton.click(async function () {
-            const comment = $commentInput.val();
+            const comment = $('#commentInput').val();
+
             await registerComment(comment);
 
             alert("댓글 등록이 완료되었습니다.");
