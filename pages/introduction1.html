@@ -8,91 +8,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="intruduction1.css" />
 </head>
 <style>
-    /* body{
-        font-family: sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-     
-    } */
 
-    .profile-header{
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        margin-top: 50px;
-    }
-
-    .profile-image {
-        object-fit: cover; 
-        width: 300px;
-        height: 300px;
-        border-radius: 70%;
-        margin-left: 20%;
-    }
-
-    .profile-info {
-        margin-left: 10%;
-    }
-
-    /* .profile-info h2{
-        margin: 0;
-        font-size: 24px;
-    } */
-
-    /* .profile-buttons{
-        margin-top: 10px;
-    } */
-
-    .profile-buttons button {
-        padding: 6px 12px;
-        margin-right: 10px;
-        font-size: 14px;
-        border: none;
-        background-color: #f0f0f0;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    hr{
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .gallery {
-        width: 1200px;
-
-        margin: 30px auto 0px auto;
-    }
 </style>
-<script>
-
-
-    //팔로워
-    window.onload = function () {
-        let count = 500;    //초기 팔로워 수
-        const btns_click = document.getElementById("following")
-        const followers_value = document.getElementById("followers")
-
-        btns_click.addEventListener('click', () => {
-            count++;
-            followers_value.textContent = count;
-        });
-    };
-
-
-
-
-</script>
+ <script src="intruduction1.js"></script>
 
 <body>
     <div class="profile-header" style="display: flex;">
         <img src="https://health.chosun.com/site/data/img_dir/2025/04/08/2025040803041_0.jpg" class="profile-image">
         <div class="profile-info">
-            <h2>이름</h2>
+            <h1>초 롱 이</h1>
             <div class="profile-button">
                 <button id="following" class="btn btn-outline-dark">팔로잉</button>
                 <button>업로드</button>
@@ -103,18 +30,22 @@
                 <span>팔로우 30</span>
             </div>
             <div class="tags">
-                <span><a href="https://github.com/hanjsnote">GIT 주소</a></span>
+                <a href="https://github.com/hanjsnote" class="btn btn-outline-dark git-button"
+                    onmouseover="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F677nA%2FbtsOY8h4sVK%2FAAAAAAAAAAAAAAAAAAAAAJ8Y8ovhJGHzv_w-ws5rQ5vjvbnAUa-NRNszg6kfdEvY%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dg6LmbibdRQGR3%252F8caVvw7DHAXRE%253D'"
+                    onmouseout="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdyHKrW%2FbtsOY3gRu1N%2FAAAAAAAAAAAAAAAAAAAAANfdlgUYRRM5qNO4ChXq6PlL19mSTikOpFmjA_RfmOLS%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dn8eFE8Wc2wnHJmCYfBb6aGDUlmA%253D'">
+                    <img id="git-img" F
+                        src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdyHKrW%2FbtsOY3gRu1N%2FAAAAAAAAAAAAAAAAAAAAANfdlgUYRRM5qNO4ChXq6PlL19mSTikOpFmjA_RfmOLS%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dn8eFE8Wc2wnHJmCYfBb6aGDUlmA%253D"
+                        alt="GitHub" style="height: 20px; vertical-align: middle;">
+                    GIT 주소
+                </a>
                 <span>♡좋아요</span>
             </div>
-            <div class="bio">
-                자기소개 글<br />
-                자기소개 글<br />
-                자기소개 글<br />
-                자기소개 글<br />
+            <div class="self_introduction">
+                안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 
             </div>
         </div>
     </div>
-<hr>
+    <hr>
 
 
     <div class="gallery">
