@@ -8,23 +8,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="introduction-basic.css" />
+    <!-- <link rel="stylesheet" href="introduction-basic.css" /> -->
+    <link rel="stylesheet" href="../styles/introduction-basic.css" />
+    <link rel="stylesheet" href="../styles/memberIntro.css" />
+    <link rel="stylesheet" href="../styles/upload.css" />
 </head>
 <style>
 
 </style>
 <script type="module" src="introduction-basic.js">
-  
 </script>
+<script type="module" src="../js/posts.js"></script>
 
 <body>
     <div class="profile-header" style="display: flex;">
         <img src="https://health.chosun.com/site/data/img_dir/2025/04/08/2025040803041_0.jpg" class="profile-image">
         <div class="profile-info">
             <h1>초 롱 이</h1>
+
             <div class="profile-button">
                 <button id="following" class="btn btn-outline-dark">팔로잉</button>
-                <button id="savebtn" class="btn btn-outline-dark">업로드</button>
+                <button id="openUploadModal" class="btn btn-outline-dark">업로드</button>
             </div>
             <div class="profile-stats">
                 <span>게시물 <span id="posting_val"></span></span>
@@ -45,34 +49,102 @@
             <div class="self_introduction">
                 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다.
             </div>
-            
+
         </div>
     </div>
     <hr>
 
-
-    <div class="mypostingbox" id="postingbox">
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="image" placeholder="이미지 주소">
-            <label for="floatingInput">이미지 주소</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="title" placeholder="제목">
-            <label for="title">제목</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="comment" placeholder="하고 싶은 말">
-            <label for="floatingInput">하고 싶은 말</label>
-        </div>
-        <button id="postingbtn" type="button" class="btn btn-outline-dark">기록하기</button>
-    </div>
-
     <div class="mycards">
         <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-            
+
         </div>
     </div>
 
+
+    <!-- 포스팅 모달 -->
+    <div id="postModal" class="post-modal">
+        <div class="post-modal-content">
+            <span class="close" id="closeModal">&times;</span>
+
+            <div class="postcontainer">
+                <!-- 이미지 영역 -->
+                <div class="leftContainer">
+                    <div class="slider">
+
+                        <div class="content-wrapper" id="PkrleTrORdA86cE30g7T">
+                            <div class="content">
+                                <div class="slides">
+                                    <img src="../img/cat.jpg" alt="이미지1">
+                                </div>
+                                <div class="slides">
+                                    <img src="../img/dog.jpg" alt="이미지2">
+                                </div>
+                                <div class="slides">
+                                    <img src="../img/cat.jpg" alt="이미지3">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 좌우 화살표 -->
+                        <div class="arrow left" onclick="prevSlide()">&#10094;</div>
+                        <div class="arrow right" onclick="nextSlide()">&#10095;</div>
+
+                        <!-- 하단 dot -->
+                        <div class="dots" id="dotsContainer">
+                            <span class="dot active" onclick="goToSlide(0)"></span>
+                            <span class="dot" onclick="goToSlide(1)"></span>
+                            <span class="dot" onclick="goToSlide(2)"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 콘텐츠 영역 -->
+                <div class="rightContainer">
+                    <div class="profile">
+                        <img src="../img/dog.jpg" class="profile-img" />
+                        <span class="username">원세영</span>
+                    </div>
+
+                    <div class="post-text">
+                        안녕하세요 😊<br>
+                        낯은 많이 가리지만 여러분과 친해지고 싶은 강다연입니다.
+                    </div>
+
+                    <div class="comments">
+                        <div class="comment">🍒 안녕하세요!</div>
+                        <div class="comment">귀여운 강아지도 보고 싶어요 🐶</div>
+                    </div>
+
+                    <div class="comment-input">
+                        <input type="text" placeholder="댓글 달기..." />
+                        <button>게시</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 업로드 모달 -->
+    <div id="uploadModal" class="upload-modal">
+        <div class="upload-modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <div class="mypostingbox" id="postingbox">
+                <h3 style="text-align: center;">게시글 작성하기</h3>
+                <hr>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="content" placeholder="내용">
+                    <label for="content">내용</label>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="imageFiles" multiple>
+                </div>
+                <div class="mybtn">
+                    <button type="button" class="btn btn-danger" id="postingbtn">게시하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
