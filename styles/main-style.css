@@ -1,0 +1,74 @@
+header {
+  background-color: black;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  height: 70px;
+  padding-top: 10px;
+}
+
+h1,
+a {
+  text-decoration: none;
+}
+
+.main {
+  color: white;
+  background-image: url('https://live.staticflickr.com/1150/1228201000_e85c909b34_b.jpg');
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  /* height: 550px; */
+}
+
+.contents {
+  margin-bottom: 50px;
+}
+
+#introduce-btn {
+  width: 500px;
+}
+
+#introduce-content {
+  /* text-align: center; */
+  margin: 30px auto 50px auto;
+}
+
+.mycard {
+  flex-basis: 18%;
+  max-width: 18%;
+  /* text-align: center; */
+  padding: 10%;
+  border-radius: 10px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  height: 350px;
+}
+
+.mycard img {
+  margin-bottom: 10px;
+}
+
+.mycard p {
+  margin-bottom: 10px;
+}
+
+.mycard a.btn {
+  margin-top: auto;
+}
+
+.team-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+}
