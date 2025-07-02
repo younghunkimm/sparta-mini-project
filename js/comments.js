@@ -42,38 +42,55 @@ function getQueryParam(key) {
 
 const key = getQueryParam('key');
 const targetId = key || "main";
-
-console.log("targetId: ", targetId);
-
+const target = targetId === "main" ? "main" : "posts";
 
 
-// 댓글 등록
+
+/**
+ * Firestore에 댓글을 등록하는 함수입니다.
+ *
+ * @function registerComment
+ * @param {string} commentText - 등록할 댓글의 텍스트입니다.
+ * 
+ * - `collection`: Firestore에서 컬렉션을 참조하는 함수
+ * 
+ * - `doc`: Firestore에서 문서 참조를 만드는 함수
+ *          이 때, doc() 에 ID를 지정하지 않으면 Firestore가 자동으로 ID를 생성합니다.
+ * 
+ * - `setDoc(경로, 객체)`: 참조하는 문서에 데이터를 저장
+ *                       해당 경로에 문서가 없으면 새로 생성하고, 있으면 덮어쓰기
+ */
 export async function registerComment(commentText) {
+    const newDocRef = doc(collection(db, "comments", target, `${target}-comments`)); // 자동 ID 생성
+    const newId = newDocRef.id; // 생성된 문서 ID
+
     const docData = {
-        targetId,
+        id: newId, // 문서 안에 ID 포함
+        ...(targetId === "main" ? {} : { targetId }), // main이 아닌 경우에만 targetId 포함
         comment: commentText,
         createdAt: serverTimestamp()
     };
-    
-    const docRef = await addDoc(collection(db, "comments"), docData);
 
-    // 생성된 문서 ID
-    const newId = docRef.id;
-
-    // ID 필드 추가
-    await setDoc(doc(db, "comments", newId), {
-        id: newId,
-        ...docData
-    })
+    await setDoc(newDocRef, docData); // ID 포함해서 저장
 }
 
 
 // 댓글 가져오기
 export async function loadComments(callback) {
+    const conditions = [];
+
+    // orderBy 추가
+    conditions.push(orderBy("createdAt", "asc"));
+
+    // targetId 가 main이 아닌 경우에만 조건 추가
+    if (targetId !== "main") {
+        conditions.push(where("targetId", "==", targetId));
+    }
+
+
     const q = query(
-        collection(db, "comments"),
-        where("targetId", "==", targetId),
-        orderBy("createdAt", "asc")
+        collection(db, "comments", target, `${target}-comments`),
+        ...conditions
     );
 
     const querySnapshot = await getDocs(q);
