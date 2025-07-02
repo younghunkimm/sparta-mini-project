@@ -13,6 +13,12 @@
 }
 
 #commentList > li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#commentList p.comment {
     position: relative;
 
     width: max-content;
@@ -26,7 +32,7 @@
     line-height: 24px;
 }
 
-#commentList > li::before {
+#commentList p.comment::before {
     content: "";
 
     position: absolute;
@@ -45,6 +51,42 @@
     border-bottom: 0;
     
     box-sizing: border-box;
+}
+
+#commentList button.commentLikeBtn {
+    margin-right: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    background-color: #fff;
+
+    font-size: 16px;
+    line-height: 1;
+    width: auto;
+    height: auto;
+
+    color: black;
+    transition: background-color 0.2s ease;
+}
+
+#commentList .heart {
+    color: red;
+}
+
+#commentList .count {
+    font-size: 16px;
+    color: black;
+}
+
+#commentList button.commentLikeBtn:hover {
+    background-color: #f0f0f0;
+    color: black;
 }
 
 #commentInputGroup {
