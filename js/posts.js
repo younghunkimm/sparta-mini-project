@@ -33,13 +33,18 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 $(document).ready(async function () {
+  const name = getQueryParam("name");
+  getPosts(name);
+});
+
+$(document).ready(async function () {
   console.log("준비");
   // 모달 열기
   $("#openModal").click(function () {
     console.log("POST 모달 열기");
     $("#postModal").css("display", "flex");
 
-    initializeSlider();
+    initializeSlider("123456");
   });
 
   // 닫기 버튼 클릭 시 모달 닫기
@@ -62,6 +67,21 @@ $(document).ready(async function () {
   });
 });
 
+// 데이터 추가
+$("#postingbtn").click(function () {
+  let title = $("#title").val();
+  let content = $("#content").val();
+  const name = getQueryParam("name");
+
+  uploadPost(title, content, name);
+});
+
+// 파라미터 가져오기
+function getQueryParam(key) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(key);
+}
+
 // 포스팅 글 업로드 + 사진 n 장
 async function uploadPost(title, content, author) {
   const files = $("#imageFiles")[0].files; // ✅ jQuery → DOM 변환
@@ -69,23 +89,22 @@ async function uploadPost(title, content, author) {
 
   console.log(files);
 
-  // 파일이 있다면 Firebase Storage에 업로드
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const storageRef = ref(storage, `posts/원세영/${Date.now()}_${file.name}`);
-
-    const snapshot = await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(snapshot.ref);
-
-    imageUrls.push(url); // URL을 배열에 저장
-  }
-
   try {
-    const postId = "123456";
-    const postRef = doc(db, "posts", author, "user_posts", postId);
+    // 파일이 있다면 Firebase Storage에 업로드
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const storageRef = ref(
+        storage,
+        `posts/${author}/${Date.now()}_${file.name}`
+      );
 
-    // const docRef = await addDoc(collection(db, "posts", author, "user_posts", postId), {
-    await setDoc(postRef, {
+      const snapshot = await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+
+      imageUrls.push(url); // URL을 배열에 저장
+    }
+
+    await addDoc(collection(db, "posts", author, "user_posts"), {
       // 각각 담은 변수를 컬렉션 필드에 title, comment, image에 각각 넣어주세요.
       title: title,
       content: content,
@@ -102,20 +121,10 @@ async function uploadPost(title, content, author) {
   }
 }
 
-// 데이터 추가
-$("#postingbtn").click(function () {
-  let title = $("#title").val();
-  let content = $("#content").val();
-  let home = "원세영";
-
-  uploadPost(title, content, home);
-});
-
 // 특정 작성자의 모든 게시글 가져오기 => 최신 순
-//async function getPostsByAuthor(author) {
-async function getPosts() {
+async function getPosts(name) {
   const q = query(
-    collection(db, "posts", "원세영", "user_posts"),
+    collection(db, "posts", name, "user_posts"),
     orderBy("timestamp", "desc")
   );
 
@@ -129,8 +138,6 @@ async function getPosts() {
     console.log(doc.id, "=>", author, " ", title, " ", content);
   });
 }
-
-//}
 
 // 특정 게시글(postID) 하나만 가져오기
 async function getPost(postId) {
@@ -172,7 +179,6 @@ async function getPost(postId) {
 
 // 이미지
 function initializeSlider(postId) {
-
   getPost(postId).then(() => {
     // 슬라이드 초기화
     let currentIndex = 0; // 현재 슬라이드 인덱스
