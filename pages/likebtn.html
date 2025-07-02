@@ -7,82 +7,20 @@
     <title>동작확인</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="../styles/comments.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
-        * {
-            font-family: "Do Hyeon", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-    </style>
     <script type="module">
-        // Firebase SDK 가져오기
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import {
-            getFirestore, collection, addDoc, getDocs,
-            doc, updateDoc, increment, getDoc, setDoc
-        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { fetchCount, updateLike } from '../js/likebtn.js';
 
-        // Firebase 설정
-        const firebaseConfig = {
-            apiKey: "AIzaSyC6n_NFwSRQr8vbpriDJ3nMAvX31z_wP1I",
-            authDomain: "introduce-606f9.firebaseapp.com",
-            projectId: "introduce-606f9",
-            storageBucket: "introduce-606f9.appspot.com",
-            messagingSenderId: "94396344619",
-            appId: "1:94396344619:web:0384e74c40dcbd1ca1fd6e",
-            measurementId: "G-KNFJY5H08H"
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeBtn = document.getElementById("LIKEBTN");
+            const targetId = likeBtn.closest(".LIKE")?.dataset.key || "LIKECOUNT";
 
-        // firebase 인스턴스 초기화
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // 파라미터 가져오기
-        function getQueryParam(key) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(key);
-        }
-
-        // 초기 설정
-        const targetId = getQueryParam('key') || "LIKECOUNT";
-
-        // 좋아요 수 불러오기
-        async function fetchCount(targetKey) {
-            const likeDocRef = doc(db, "LIKE", targetKey);
-            const docSnap = await getDoc(likeDocRef);
-
-            // 문서 없을때 값 생성
-            if (!docSnap.exists()) {
-                await setDoc(likeDocRef, { count: 0 });
-                document.getElementById("count").textContent = 0;
-                document.getElementById("heart").textContent = "♡";
-                return;
-            }
-
-            // 숫자와 하트 변경
-            const count = docSnap.data().count ?? 0;
-            document.getElementById("count").textContent = count;
-            document.getElementById("heart").textContent = count >= 1 ? "♥" : "♡";
-        }
-
-        // 버튼 클릭시 좋아요 증가
-        async function updateLike(targetKey) {
-            const likeDocRef = doc(db, "LIKE", targetKey);
-            await updateDoc(likeDocRef, {
-                count: increment(1)
-            });
-            fetchCount(targetKey);
-        }
-
-        // 데이터 가져오기
-        window.addEventListener('DOMContentLoaded', () => {
             fetchCount(targetId);
 
-            // 좋아요 버튼 이벤트
-            document.getElementById("LIKEBTN").addEventListener("click", () => {
+            likeBtn.addEventListener("click", () => {
                 updateLike(targetId);
             });
         });
@@ -90,13 +28,11 @@
 </head>
 
 <body>
-    <div>
-        <p class="title">자기소개글 좋아요</p>
-    </div>
-    <div class="LIKE" style="margin-bottom: 40px;">
-        <button id="LIKEBTN" type="button" class="rounded-pill" class="btn btn-outline-dark"><span id="heart"
-                style="color: red; margin-right: 2px;">♡</span> 좋아요 <span id="count"
-                style="margin-left: 6px;">0</span></button>
+    <div class="LIKE" data-key="3">
+        <button id="LIKEBTN" type="button" class="likebtnS rounded-pill btn btn-outline-dark">
+            <span class="heartS" id="heart">♡</span> 좋아요 
+            <span id="count">0</span>
+        </button>
     </div>
 </body>
 
