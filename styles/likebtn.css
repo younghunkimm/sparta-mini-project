@@ -1,0 +1,14 @@
+.heartS {
+    color: red;
+    font-size: 18px;
+    margin-right: -3px;
+}
+
+
+.likebtnS {
+    padding: 4px 10px;  
+    font-size: 14px;  
+    gap: 4px;        
+    display: inline-flex;
+    align-items: center; 
+}
