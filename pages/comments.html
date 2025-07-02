@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script type="module">
-        import { registerComment, loadComments } from '../js/comments.js';
+        import { registerComment, loadComments, updateLike, fetchCount} from '../js/comments.js';
 
         const $commentList = $('#commentList');
         const $commentButton = $('#commentButton');
@@ -31,8 +31,15 @@
             await loadComments((row) => {
                 const id = row.id || "";
                 const comment = row.comment;
-                
-                const tempHtml = `<li data-id="${id}">${comment}</li>`;
+                const like = row.like ?? 0;
+
+                const tempHtml = `<li data-id="${id}">
+                    <p class="comment">${comment}</p>
+                        <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark" data-id="${id}">
+                            <span class="heart" data-id="${id}">${like >= 1 ? "❤" : "♡"}</span>
+                            <span class="count" data-id="${id}">${like}</span>
+                        </button>
+                </li>`;
                 $commentList.append(tempHtml);
             });
 

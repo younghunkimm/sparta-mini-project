@@ -5,6 +5,9 @@ import {
     collection,
     doc,
     addDoc,
+    getDoc,
+    updateDoc,
+    increment,
     query,
     where,
     orderBy,
@@ -106,4 +109,38 @@ $('#commentInput').keypress(function (e) {
         e.preventDefault();
         $('#commentButton').click();
     }
+});
+
+// 좋아요 수 불러오기
+export async function fetchCount(commentId) {
+    const commentDocRef = doc(db, "comments", target, `${target}-comments`, commentId);
+    const docSnap = await getDoc(commentDocRef);
+
+    if (!docSnap.exists()) {
+        console.log("No such comment!");
+        $(`.count[data-id='${commentId}']`).text(0);
+        $(`.heart[data-id='${commentId}']`).text("♡");
+        return;
+    }
+
+    const count = docSnap.data().like ?? 0;
+    $(`.count[data-id='${commentId}']`).text(count);
+    $(`.heart[data-id='${commentId}']`).text(count >= 1 ? "❤" : "♡");
+}
+
+// 버튼 클릭시 좋아요 증가
+export async function updateLike(commentId) {
+    const commentDocRef = doc(db, "comments", target, `${target}-comments`, commentId);
+    await updateDoc(commentDocRef, {
+        like: increment(1)
+    });
+    fetchCount(commentId);
+}
+
+// 이벤트
+$(document).on("click", ".commentLikeBtn", async function () {
+    const $this = $(this);
+    const commentId = $this.data("id");
+
+    await updateLike(commentId);
 });
