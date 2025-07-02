@@ -10,6 +10,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../styles/comments.css">
     <link rel="stylesheet" href="/styles/main-style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/main-toggle.js" defer></script>
@@ -20,6 +21,46 @@
         font-family: "Lora", serif;
       }
     </style>
+
+    <script type="module">
+        import { registerComment, loadComments, updateLike, fetchCount} from '../js/comments.js';
+
+        const $commentList = $('#commentList');
+        const $commentButton = $('#commentButton');
+
+        // 등록 버튼
+        $commentButton.click(async function () {
+            const comment = $('#commentInput').val();
+
+            await registerComment("main", comment);
+
+            window.location.reload();
+        });
+
+        // 댓글 가져오기
+        if ($commentList.length > 0) {
+            $commentList.empty();
+
+            await loadComments("main", row => {
+                const id = row.id || "";
+                const target = row.targetId || "main";
+                const comment = row.comment;
+                const like = row.like ?? 0;
+
+                const tempHtml = `<li data-id="${id}" data-target="${target}">
+                    <p class="comment">${comment}</p>
+                        <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark">
+                            <span class="heart">${like >= 1 ? "❤" : "♡"}</span>
+                            <span class="count">${like}</span>
+                        </button>
+                </li>`;
+                $commentList.append(tempHtml);
+            });
+
+            // 댓글의 스크롤 위치를 최하단으로 이동
+            $commentList.scrollTop($commentList.prop("scrollHeight"))
+        }
+    </script>
   </head>
   <body>
     <header>
@@ -129,6 +170,14 @@
           <!-- /.col-lg-4 -->
         </div>
       </div>
+    </div>
+    <div class="comments-section">
+        <ul id="commentList"></ul>
+
+        <div id="commentInputGroup">
+            <input type="text" name="" id="commentInput" placeholder="댓글을 입력해주세요.">
+            <button type="button" id="commentButton"><img src="../images/icon_send.svg"></button>
+        </div>
     </div>
   </body>
 </html>

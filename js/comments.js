@@ -35,19 +35,6 @@ const db = getFirestore(app);
 
 
 
-// 파라미터 가져오기
-// 현재는 임시로 파라미터로 처리
-// 추후 개인 게시물의 키값으로 변경예정
-function getQueryParam(key) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(key);
-}
-
-const key = getQueryParam('key');
-const targetId = key || "main";
-const target = targetId === "main" ? "main" : "posts";
-
-
 
 /**
  * Firestore에 댓글을 등록하는 함수입니다.
@@ -63,7 +50,8 @@ const target = targetId === "main" ? "main" : "posts";
  * - `setDoc(경로, 객체)`: 참조하는 문서에 데이터를 저장
  *                       해당 경로에 문서가 없으면 새로 생성하고, 있으면 덮어쓰기
  */
-export async function registerComment(commentText) {
+export async function registerComment(targetId, commentText) {
+    const target = targetId === "main" ? "main" : "posts";
     const newDocRef = doc(collection(db, "comments", target, `${target}-comments`)); // 자동 ID 생성
     const newId = newDocRef.id; // 생성된 문서 ID
 
@@ -79,7 +67,8 @@ export async function registerComment(commentText) {
 
 
 // 댓글 가져오기
-export async function loadComments(callback) {
+export async function loadComments(targetId, callback) {
+    const target = targetId === "main" ? "main" : "posts";
     const conditions = [];
 
     // orderBy 추가
@@ -112,35 +101,36 @@ $('#commentInput').keypress(function (e) {
 });
 
 // 좋아요 수 불러오기
-export async function fetchCount(commentId) {
-    const commentDocRef = doc(db, "comments", target, `${target}-comments`, commentId);
+export async function fetchCount(commentTarget, commentId) {
+    const commentDocRef = doc(db, "comments", commentTarget, `${commentTarget}-comments`, commentId);
     const docSnap = await getDoc(commentDocRef);
 
     if (!docSnap.exists()) {
         console.log("No such comment!");
-        $(`.count[data-id='${commentId}']`).text(0);
-        $(`.heart[data-id='${commentId}']`).text("♡");
+        $(`#commentList li[data-id='${commentId}']`).find('.count').text(0);
+        $(`#commentList li[data-id='${commentId}']`).find('.heart').text("♡");
         return;
     }
 
     const count = docSnap.data().like ?? 0;
-    $(`.count[data-id='${commentId}']`).text(count);
-    $(`.heart[data-id='${commentId}']`).text(count >= 1 ? "❤" : "♡");
+    $(`#commentList li[data-id='${commentId}']`).find('.count').text(count);
+    $(`#commentList li[data-id='${commentId}']`).find('.heart').text(count >= 1 ? "❤" : "♡");
 }
 
 // 버튼 클릭시 좋아요 증가
-export async function updateLike(commentId) {
-    const commentDocRef = doc(db, "comments", target, `${target}-comments`, commentId);
+export async function updateLike(commentTarget, commentId) {
+    const commentDocRef = doc(db, "comments", commentTarget, `${commentTarget}-comments`, commentId);
     await updateDoc(commentDocRef, {
         like: increment(1)
     });
-    fetchCount(commentId);
+    fetchCount(commentTarget, commentId);
 }
 
 // 이벤트
 $(document).on("click", ".commentLikeBtn", async function () {
     const $this = $(this);
-    const commentId = $this.data("id");
+    const commentId = $this.closest('li').data("id");
+    const commentTarget = $this.closest('li').data("target");
 
-    await updateLike(commentId);
+    await updateLike(commentTarget, commentId);
 });
