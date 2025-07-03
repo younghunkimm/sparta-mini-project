@@ -78,7 +78,7 @@
 
 /* 왼쪽 이미지 영역 */
 .leftContainer {
-  flex: 1;
+  width: 630px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,11 +173,11 @@
 
 /* 오른쪽 콘텐츠 영역 */
 .rightContainer {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   background-color: #fafafa;
 }
 
@@ -204,48 +204,4 @@
   font-size: 14px;
   line-height: 1.4;
   margin-bottom: 20px;
-}
-
-/* 댓글 */
-.comments {
-  flex-grow: 1;
-  font-size: 14px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-  padding-right: 10px; /* 스크롤바와 내용 겹침 방지 */
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.comment {
-  max-width: 70%;
-  margin-left: auto;
-  background-color: #e6f0ff;
-  padding: 8px 12px;
-  border-radius: 15px;
-  text-align: left;
-  word-wrap: break-word;
-}
-
-/* 댓글 입력창 */
-.comment-input {
-  display: flex;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-}
-
-.comment-input input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
-
-.comment-input button {
-  background: none;
-  border: none;
-  color: #3897f0;
-  font-weight: bold;
-  cursor: pointer;
 }
