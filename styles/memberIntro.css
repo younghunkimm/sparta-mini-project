@@ -191,7 +191,7 @@
 .profile-img {
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* ✅ 동그랗게 만드는 핵심 */
+  border-radius: 70%; /* ✅ 동그랗게 만드는 핵심 */
   object-fit: cover; /* ✅ 이미지 비율을 잘 맞추기 위해 */
 }
 
