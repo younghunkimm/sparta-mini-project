@@ -80,7 +80,19 @@ async function getPosts(name) {
   querySnapshot.forEach((doc) => {
         let name = doc.data().name;
         let profileImage = doc.data().profileImage;
+        let gitAddress = doc.data().gitAddress;
         console.log(doc.id, "=>", name, " : ", profileImage);
+
+        let temp_html = `
+        <div class="mycard">
+          <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=${name}&git=${gitAddress}">
+            <img src="${profileImage}" alt="${name}" class="bd-placeholder-img rounded-circle" width="140"
+              height="140" />
+          </a>
+          <h2 class="fw-normal">${name}</h2>
+        </div>`
+
+        $(".added-team-row").append(temp_html);
   });
 }
 
