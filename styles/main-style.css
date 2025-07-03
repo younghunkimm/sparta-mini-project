@@ -21,7 +21,6 @@ a {
   background-position: center;
   background-size: cover;
   text-align: center;
-  /* height: 550px; */
 }
 
 .contents {
@@ -33,14 +32,16 @@ a {
 }
 
 #introduce-content {
-  /* text-align: center; */
   margin: 30px auto 50px auto;
+}
+
+.fw-normal {
+  font-weight: bold;
 }
 
 .mycard {
   flex-basis: 18%;
   max-width: 18%;
-  /* text-align: center; */
   padding: 10%;
   border-radius: 50%;
   padding: 10px;

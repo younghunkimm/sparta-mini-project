@@ -1,9 +1,9 @@
 import { db, storage } from "../js/firebase-config.js"; 
 
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import { getDocs, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { getDocs,  collectionGroup, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { getDownloadURL, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
-
+import { getProfile } from "../js/introduction-basic.js";
 
 $(document).ready(async function () {
   const name = getQueryParam("name");
