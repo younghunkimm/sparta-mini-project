@@ -1,36 +1,9 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import {
-  collection,
-  addDoc,
-} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import {
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-  orderBy,
-  query,
-} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import {
-  getStorage,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+import { db, storage } from "../js/firebase-config.js"; 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAXLowFr8AzZ4j4o91jtKGCYrrSgvlnwYc",
-  authDomain: "food-fighter-be5cf.firebaseapp.com",
-  projectId: "food-fighter-be5cf",
-  storageBucket: "food-fighter-be5cf.firebasestorage.app",
-  messagingSenderId: "408895238916",
-  appId: "1:408895238916:web:767adba1bfd56aeada5651",
-};
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { getDocs, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { getDownloadURL, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
 
 $(document).ready(async function () {
   const name = getQueryParam("name");
@@ -69,11 +42,10 @@ $(document).ready(async function () {
 
 // 데이터 추가
 $("#postingbtn").click(function () {
-  let title = $("#title").val();
   let content = $("#content").val();
   const name = getQueryParam("name");
 
-  uploadPost(title, content, name);
+  uploadPost(content, name);
 });
 
 // 파라미터 가져오기
@@ -83,7 +55,7 @@ function getQueryParam(key) {
 }
 
 // 포스팅 글 업로드 + 사진 n 장
-async function uploadPost(title, content, author) {
+async function uploadPost(content, author) {
   const files = $("#imageFiles")[0].files; // ✅ jQuery → DOM 변환
   const imageUrls = [];
 
@@ -93,11 +65,7 @@ async function uploadPost(title, content, author) {
     // 파일이 있다면 Firebase Storage에 업로드
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const storageRef = ref(
-        storage,
-        `posts/${author}/${Date.now()}_${file.name}`
-      );
-
+      const storageRef = ref(storage, `posts/${author}/${Date.now()}_${file.name}`);
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);
 
@@ -106,7 +74,6 @@ async function uploadPost(title, content, author) {
 
     await addDoc(collection(db, "posts", author, "user_posts"), {
       // 각각 담은 변수를 컬렉션 필드에 title, comment, image에 각각 넣어주세요.
-      title: title,
       content: content,
       author: author,
       timestamp: new Date(),
@@ -131,11 +98,10 @@ async function getPosts(name) {
   const allPost = await getDocs(q);
 
   allPost.forEach((doc) => {
-    let title = doc.data().title;
     let content = doc.data().content;
     let author = doc.data().author;
     //console.log(doc.id, "=>", doc.data());
-    console.log(doc.id, "=>", author, " ", title, " ", content);
+    console.log(doc.id, "=>", author, " ", content);
   });
 }
 
