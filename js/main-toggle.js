@@ -90,7 +90,7 @@ async function getPosts(name) {
             <img src="${profileImage}" alt="${name}" class="bd-placeholder-img rounded-circle" width="140"
               height="140" />
           </a>
-          <h2 class="fw-normal">${name}</h2>
+          <h2 class="fw-bold">${name}</h2>
         </div>`
 
         $(".added-team-row").append(temp_html);
