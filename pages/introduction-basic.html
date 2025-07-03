@@ -24,7 +24,7 @@
     import { subscribeCount, updateLike } from "../js/likebtn.js";
 
     const urlParams = new URLSearchParams(window.location.search);
-    const keyFromURL = urlParams.get("key");
+    const keyFromURL = urlParams.get("name");
 
     const likeContainer = document.querySelector(".LIKE");
     const keyFromDataAttr = likeContainer?.dataset.key;
