@@ -1,11 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap');
 
 body {
-    font-family: "Jua", sans-serif;
-    font-size: 150%;
-    margin: 0 auto;
-    padding: 20px;
+  font-family: "Jua", sans-serif;
+  font-size: 150%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
+header {
+  background-size: cover;
+  background-color: black;
+  text-align: center;
+
+  height: 70px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+
+header a {
+  text-decoration: none;
 }
 
 .profile-header {
