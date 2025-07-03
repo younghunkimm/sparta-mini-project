@@ -45,6 +45,33 @@ export async function registerComment(targetId, commentText) {
     };
 
     await setDoc(newDocRef, docData); // ID 포함해서 저장
+
+    // 등록된 댓글을 생성
+    const createdDocRef = doc(db, "comments", target, `${target}-comments`, newId);
+    const docSnap = await getDoc(createdDocRef);
+
+    if (!docSnap.exists()) {
+        console.log("No such comment!");
+    } else {
+        const createdCommentId = docSnap.data().id;
+        const createdCommentComment = docSnap.data().comment;
+        const createdCommentLike = docSnap.data().like ?? 0; // like가 없으면 0으로 초기화
+
+        const tempHtml = `<li data-id="${createdCommentId}">
+            <p class="comment">${createdCommentComment}</p>
+                <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark" data-id="${createdCommentId}">
+                    <span class="heart" data-id="${createdCommentId}">${createdCommentLike >= 1 ? "❤" : "♡"}</span>
+                    <span class="count" data-id="${createdCommentId}">${createdCommentLike}</span>
+                </button>
+        </li>`;
+
+        $('#commentList').append(tempHtml);
+
+        $('#commentInput').val(''); // 댓글 입력창 초기화
+
+        // 댓글의 스크롤 위치를 최하단으로 이동
+        $('#commentList').scrollTop($('#commentList').prop("scrollHeight"));
+    }
 }
 
 

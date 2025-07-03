@@ -18,6 +18,12 @@
     overflow: auto;
 }
 
+#postModal:has(#commentList) #commentList {
+    max-height: none;
+
+    flex: 1 0 0;
+}
+
 #commentList > li {
     display: flex;
     flex-direction: column;
@@ -30,10 +36,10 @@
 #commentList p.comment {
     position: relative;
 
-    padding: 5px 15px;
+    padding: 8px 12px;
     margin: 5px 10px 5px 0;
 
-    background-color: #e5e5e5;
+    background-color: #e6f0ff;
     border-radius: 12px;
 
     font-size: 16px;
@@ -56,7 +62,7 @@
     /* background-color: red; */
 
     border: 10px solid transparent;
-    border-left-color: #e5e5e5;
+    border-left-color: #e6f0ff;
     border-right: 0;
     border-bottom: 0;
     
@@ -73,7 +79,7 @@
 
     padding: 8px;
     border-radius: 50%;
-    border: 1px solid #000;
+    border: 1px solid #ddd;
     background-color: #fff;
 
     font-size: 16px;

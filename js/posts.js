@@ -18,6 +18,13 @@ import {
   uploadBytes,
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
+import {
+    registerComment,
+    loadComments,
+    updateLike,
+    fetchCount,
+} from "./comments.js";
+
 $(document).ready(async function () {
   const name = getQueryParam("name");
   getPosts(name);
@@ -135,15 +142,33 @@ async function getPosts(name) {
   });
 }
 
-$(document).on("click", ".posting-image", async function () {
-  let $this = $(this);
+$(document).on('click', '.posting-image', async function() {
+    let $this = $(this);
+    const $commentList = $("#commentList");
 
-  const name = String($this.data().name);
-  const id = String($this.data().id);
-  console.log(name, " ", id);
-  await getPost(name, id);
+    const name = String($this.data().name);
+    const id = String($this.data().id);
+
+    await getPost(name, id);
   await initializeSlider(name, id);
   await getProfile(name);
+
+    $commentList.empty(); // 댓글 목록 초기화
+    loadComments(id, (row) => {
+        const id = row.id || "";
+        const target = row.targetId || "main";
+        const comment = row.comment;
+        const like = row.like ?? 0;
+
+        const tempHtml = `<li data-id="${id}" data-target="${target}">
+                    <p class="comment">${comment}</p>
+                        <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark">
+                            <span class="heart">${like >= 1 ? "❤" : "♡"}</span>
+                            <span class="count">${like}</span>
+                        </button>
+                </li>`;
+        $commentList.append(tempHtml);
+    })
 });
 
 async function getProfile(name) {
@@ -197,7 +222,7 @@ async function getPost(name, postId) {
       );
     }
 
-    $("#postModal").show();
+    $('#postModal').data('id', postId).show();
   } else {
     console.log("No such document!");
   }
