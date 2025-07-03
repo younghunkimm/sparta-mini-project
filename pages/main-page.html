@@ -1,257 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Return Dream</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../styles/comments.css" />
-    <link rel="stylesheet" href="../styles/main-style.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../js/main-toggle.js" type="module"></script>
-    <link rel="stylesheet" href="../styles/upload.css">
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
-      * {
-        font-family: "Lora", serif;
-      }
-    </style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Return Dream</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../styles/comments.css" />
+  <link rel="stylesheet" href="../styles/main-style.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="../js/main-toggle.js" type="module"></script>
+  <link rel="stylesheet" href="../styles/upload.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
-    <script type="module">
-      import {
-        registerComment,
-        loadComments,
-        updateLike,
-        fetchCount,
-      } from "../js/comments.js";
+    * {
+      font-family: "Lora", serif;
+    }
+  </style>
 
-      const $commentList = $("#commentList");
-      const $commentButton = $("#commentButton");
+  <script type="module">
+    import {
+      registerComment,
+      loadComments,
+      updateLike,
+      fetchCount,
+    } from "../js/comments.js";
 
-      // 등록 버튼
-      $commentButton.click(async function () {
-        const comment = $("#commentInput").val();
+    const $commentList = $("#commentList");
+    const $commentButton = $("#commentButton");
 
-        await registerComment("main", comment);
+    // 등록 버튼
+    $commentButton.click(async function () {
+      const comment = $("#commentInput").val();
 
-        window.location.reload();
-      });
+      await registerComment("main", comment);
 
-      // 댓글 가져오기
-      if ($commentList.length > 0) {
-        $commentList.empty();
+      window.location.reload();
+    });
 
-        await loadComments("main", (row) => {
-          const id = row.id || "";
-          const target = row.targetId || "main";
-          const comment = row.comment;
-          const like = row.like ?? 0;
+    // 댓글 가져오기
+    if ($commentList.length > 0) {
+      $commentList.empty();
 
-          const tempHtml = `<li data-id="${id}" data-target="${target}">
+      await loadComments("main", (row) => {
+        const id = row.id || "";
+        const target = row.targetId || "main";
+        const comment = row.comment;
+        const like = row.like ?? 0;
+
+        const tempHtml = `<li data-id="${id}" data-target="${target}">
                     <p class="comment">${comment}</p>
                         <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark">
                             <span class="heart">${like >= 1 ? "❤" : "♡"}</span>
                             <span class="count">${like}</span>
                         </button>
                 </li>`;
-          $commentList.append(tempHtml);
-        });
+        $commentList.append(tempHtml);
+      });
 
-        // 댓글의 스크롤 위치를 최하단으로 이동
-        $commentList.scrollTop($commentList.prop("scrollHeight"));
-      }
-    </script>
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">RETURN DREAM</a></h1>
-    </header>
-    <div class="main">
-      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-        <div class="container-fluid py-5">
-          <div class="contents">
-            <h1 class="display-5 fw-bold">Return Dream을 소개합니다</h1>
-            <p id="introduce-content" class="col-md-8 fs-4">
-              “Return Dream”은 각자의 자리에서 잠시 멀어졌던 꿈을 다시 되찾고자
-              모인 사람들의 팀입니다. 과거의 열정과 가능성을 되살려, 새로운
-              도전과 성장을 함께 이어가는 의미를 담고 있습니다. 이 팀명은 더
-              나은 내일을 위한 꿈의 재출발을 상징합니다.
-            </p>
-          </div>
+      // 댓글의 스크롤 위치를 최하단으로 이동
+      $commentList.scrollTop($commentList.prop("scrollHeight"));
+    }
+  </script>
+</head>
 
-          <!-- <button
-            id="introduce-btn"
-            type="button"
-            class="btn btn-outline-light"
-          >
-            팀원소개 보러가기
-          </button> -->
+<body>
+  <header>
+    <h1><a href="index.html">RETURN DREAM</a></h1>
+  </header>
+  <div class="main">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <div class="contents">
+          <h1 class="display-5 fw-bold">Return Dream을 소개합니다</h1>
+          <p id="introduce-content" class="col-md-8 fs-4">
+            “Return Dream”은 각자의 자리에서 잠시 멀어졌던 꿈을 다시 되찾고자
+            모인 사람들의 팀입니다. 과거의 열정과 가능성을 되살려, 새로운
+            도전과 성장을 함께 이어가는 의미를 담고 있습니다. 이 팀명은 더
+            나은 내일을 위한 꿈의 재출발을 상징합니다.
+          </p>
         </div>
       </div>
     </div>
-    <button id="openUploadModal" type="button" class="btn btn-outline-dark introduce-btn">
-      자기소개 등록하기
-    </button>
-    <!-- <div id="team-section" style="display: none;"> -->
-    <div class="mycards">
-      <div class="team-row">
-        <div class="mycard">
-          <img
-            src="../images/Suhyeong.png"
-            alt="Cucurella"
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-          />
-          <h2 class="fw-normal">정서영</h2>
-          <!-- <p>추진력 하나로 개발 세계에 입문했습니다. 실력있는 개발자가 되는 그날까지 열심히 배우겠습니다. 잘 부탁드립니다.</p> -->
-          <p>
-            <a
-              class="btn btn-secondary"
-              href="http://127.0.0.1:5500/pages/introduction-basic.html?name=정서영"
-              >View details</a
-            >
-          </p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="mycard">
-          <img
-            src="../images/Donghyun.png"
-            alt="Cucurella"
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-          />
-          <h2 class="fw-normal">김동현</h2>
-          <!-- <p>
-            개발은 처음이라 모든게 낯설지만 열심히 배우는 중입니다. 잘
-            부탁드리겠습니다!
-          </p> -->
-          <p>
-            <a
-              class="btn btn-secondary"
-              href="http://127.0.0.1:5500/pages/introduction-basic.html?name=김동현"
-              >View details</a
-            >
-          </p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="mycard">
-          <img
-            src="../images/Seyoung.png"
-            alt="Cucurella"
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-          />
-          <h2 class="fw-normal">원세영</h2>
-          <!-- <p>
-            개발이 너무 재밌어서 떠나지 못하는 망령(?)입니다. 하지만 여전히
-            배우고 성장 중입니다. 잘 부탁드려요!
-          </p> -->
-          <p>
-            <a
-              class="btn btn-secondary"
-              href="http://127.0.0.1:5500/pages/introduction-basic.html?name=원세영"
-              >View details</a
-            >
-          </p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="mycard">
-          <img
-            src="../images/Jeongsik.png"
-            alt="Cucurella"
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-          />
-          <h2 class="fw-normal">한정식</h2>
-          <!-- <p>
-            백엔드를 확실히 이해하는 개발자가 되고 싶습니다.
-          </p> -->
-          <p>
-            <a
-              class="btn btn-secondary"
-              href="http://127.0.0.1:5500/pages/introduction-basic.html?name=한정식"
-              >View details</a
-            >
-          </p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="mycard">
-          <img
-            src="../images/Younghoon.png"
-            alt="Cucurella"
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-          />
-          <h2 class="fw-normal">김영훈</h2>
-          <!-- <p>
-            재밌게 배우면서 멋진 자바 개발자로 성장하고 싶어요. 마지막날까지 모두 화이팅!
-          </p> -->
-          <p>
-            <a
-              class="btn btn-secondary"
-              href="http://127.0.0.1:5500/pages/introduction-basic.html?name=김영훈"
-              >View details</a
-            >
-          </p>
-        </div>
-        <!-- /.col-lg-4 -->
+  </div>
+  <button id="openUploadModal" type="button" class="btn btn-outline-dark introduce-btn">
+    자기소개 등록하기
+  </button>
+  <!-- <div id="team-section" style="display: none;"> -->
+  <div class="mycards">
+    <div class="team-row">
+      <div class="mycard">
+        <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=정서영&git=https://github.com/grace-jsy">
+          <img src="../images/Suhyeong.png" alt="Cucurella" class="bd-placeholder-img rounded-circle" width="140"
+            height="140" />
+        </a>
+        <h2 class="fw-normal">정서영</h2>
       </div>
-    </div>
-    <!-- </div> -->
-    <div class="comments-section">
-      <ul id="commentList"></ul>
 
-      <div id="commentInputGroup">
-        <input
-          type="text"
-          name=""
-          id="commentInput"
-          placeholder="댓글을 입력해주세요."
-        />
-        <button type="button" id="commentButton">
-          <img src="../images/icon_send.svg" />
-        </button>
+      <div class="mycard">
+        <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=김동현&git=https://github.com/donghyeon505">
+          <img src="../images/Donghyun.png" alt="Cucurella" class="bd-placeholder-img rounded-circle" width="140"
+            height="140" />
+        </a>
+        <h2 class="fw-normal">김동현</h2>
       </div>
-    </div>
 
-    <!-- 업로드 모달 -->
-    <div id="uploadModal" class="upload-modal">
-      <div class="upload-modal-content">
-          <span class="close" id="closeModal">&times;</span>
-          <div class="mypostingbox" id="postingbox">
-              <h3 style="text-align: center;">팀원 추가하기</h3>
-              <hr>
-              <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="name" placeholder="이름">
-                  <label for="content">이름</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="git-address" placeholder="깃주소">
-                <label for="content">깃주소</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="content" placeholder="내용">
-              <label for="content">자기소개</label>
-          </div>
-              <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="imageFiles">
-              </div>
-              <div class="mybtn">
-                  <button type="button" class="btn btn-danger" id="postingbtn">추가하기</button>
-              </div>
-          </div>
+      <div class="mycard">
+        <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=원세영&git=https://github.com/seyoung5744">
+          <img src="../images/Seyoung.png" alt="Cucurella" class="bd-placeholder-img rounded-circle" width="140"
+            height="140" />
+        </a>
+        <h2 class="fw-normal">원세영</h2>
+      </div>
+
+      <div class="mycard">
+        <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=한정식">
+
+          <img src="../images/Jeongsik.png" alt="Cucurella" class="bd-placeholder-img rounded-circle" width="140"
+            height="140" />
+        </a>
+        <h2 class="fw-normal">한정식</h2>
+      </div>
+
+      <div class="mycard">
+        <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=김영훈">
+          <img src="../images/Younghoon.png" alt="Cucurella" class="bd-placeholder-img rounded-circle" width="140"
+            height="140" />
+        </a>
+        <h2 class="fw-normal">김영훈</h2>
       </div>
     </div>
-  </body>
+  </div>
+  <div class="comments-section">
+    <ul id="commentList"></ul>
+
+    <div id="commentInputGroup">
+      <input type="text" name="" id="commentInput" placeholder="댓글을 입력해주세요." />
+      <button type="button" id="commentButton">
+        <img src="../images/icon_send.svg" />
+      </button>
+    </div>
+  </div>
+
+  <!-- 업로드 모달 -->
+  <div id="uploadModal" class="upload-modal">
+    <div class="upload-modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <div class="mypostingbox" id="postingbox">
+        <h3 style="text-align: center;">팀원 추가하기</h3>
+        <hr>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="이름">
+          <label for="content">이름</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="git-address" placeholder="깃주소">
+          <label for="content">깃주소</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="content" placeholder="내용">
+          <label for="content">자기소개</label>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="imageFiles">
+        </div>
+        <div class="mybtn">
+          <button type="button" class="btn btn-danger" id="postingbtn">추가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
