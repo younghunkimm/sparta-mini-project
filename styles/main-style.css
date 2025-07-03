@@ -72,3 +72,16 @@ a {
   gap: 20px;
   padding: 40px 20px;
 }
+
+.comments-section {
+    width: auto;
+    margin : 70px 50px 50px 50px;
+    height: 700px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: space-between;
+}
