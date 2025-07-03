@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+* {
+  font-family: "Lora", serif;
+}
 
 body {
-  font-family: "Jua", sans-serif;
   font-size: 150%;
   margin: 0;
   padding: 0;
@@ -10,7 +13,7 @@ body {
 
 header {
   background-size: cover;
-  background-color: black;
+  background-color: white;
   text-align: center;
 
   height: 70px;
@@ -21,6 +24,8 @@ header {
 
 header a {
   text-decoration: none;
+
+  color: red;
 }
 
 .profile-header {
@@ -103,3 +108,4 @@ hr {
     font-size: 18px;  
     gap: 4px;
 };
+
