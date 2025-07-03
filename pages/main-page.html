@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="../styles/comments.css" />
     <link rel="stylesheet" href="../styles/main-style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../js/main-toggle.js" defer></script>
+    <script src="../js/main-toggle.js" type="module"></script>
+    <link rel="stylesheet" href="../styles/upload.css">
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
@@ -94,7 +95,7 @@
         </div>
       </div>
     </div>
-    <button id="introduce-btn" type="button" class="btn btn-outline-dark">
+    <button id="openUploadModal" type="button" class="btn btn-outline-dark introduce-btn">
       자기소개 등록하기
     </button>
     <!-- <div id="team-section" style="display: none;"> -->
@@ -102,7 +103,7 @@
       <div class="team-row">
         <div class="mycard">
           <img
-            src="/images/정서영.png"
+            src="../images/Suhyeong.png"
             alt="Cucurella"
             class="bd-placeholder-img rounded-circle"
             width="140"
@@ -121,7 +122,7 @@
         <!-- /.col-lg-4 -->
         <div class="mycard">
           <img
-            src="/images/김동현.png"
+            src="../images/Donghyun.png"
             alt="Cucurella"
             class="bd-placeholder-img rounded-circle"
             width="140"
@@ -143,7 +144,7 @@
         <!-- /.col-lg-4 -->
         <div class="mycard">
           <img
-            src="/images/원세영.png"
+            src="../images/Seyoung.png"
             alt="Cucurella"
             class="bd-placeholder-img rounded-circle"
             width="140"
@@ -165,7 +166,7 @@
         <!-- /.col-lg-4 -->
         <div class="mycard">
           <img
-            src="/images/한정식.png"
+            src="../images/Jeongsik.png"
             alt="Cucurella"
             class="bd-placeholder-img rounded-circle"
             width="140"
@@ -186,7 +187,7 @@
         <!-- /.col-lg-4 -->
         <div class="mycard">
           <img
-            src="/images/김영훈.png"
+            src="../images/Younghoon.png"
             alt="Cucurella"
             class="bd-placeholder-img rounded-circle"
             width="140"
@@ -221,6 +222,35 @@
         <button type="button" id="commentButton">
           <img src="../images/icon_send.svg" />
         </button>
+      </div>
+    </div>
+
+    <!-- 업로드 모달 -->
+    <div id="uploadModal" class="upload-modal">
+      <div class="upload-modal-content">
+          <span class="close" id="closeModal">&times;</span>
+          <div class="mypostingbox" id="postingbox">
+              <h3 style="text-align: center;">팀원 추가하기</h3>
+              <hr>
+              <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="name" placeholder="이름">
+                  <label for="content">이름</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="git-address" placeholder="깃주소">
+                <label for="content">깃주소</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="content" placeholder="내용">
+              <label for="content">자기소개</label>
+          </div>
+              <div class="input-group mb-3">
+                  <input type="file" class="form-control" id="imageFiles">
+              </div>
+              <div class="mybtn">
+                  <button type="button" class="btn btn-danger" id="postingbtn">추가하기</button>
+              </div>
+          </div>
       </div>
     </div>
   </body>
