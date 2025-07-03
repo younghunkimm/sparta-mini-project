@@ -1,7 +1,7 @@
 // Firebase SDK 라이브러리 가져오기
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { db } from "../js/firebase-config.js"; 
+
 import {
-    getFirestore,
     collection,
     doc,
     addDoc,
@@ -15,24 +15,6 @@ import {
     setDoc,
     serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-
-// Firebase 구성 정보 설정
-const firebaseConfig = {
-    apiKey: "AIzaSyDkSPoHu7URW0Ipcsq8glFhF_KwezH-75M",
-    authDomain: "sparta-1b688.firebaseapp.com",
-    projectId: "sparta-1b688",
-    storageBucket: "sparta-1b688.firebasestorage.app",
-    messagingSenderId: "318584876979",
-    appId: "1:318584876979:web:5a423ccefcc6cf3891e5c6",
-    measurementId: "G-YSCBS9BEGL"
-};
-
-
-// Firebase 인스턴스 초기화
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 
 
 
