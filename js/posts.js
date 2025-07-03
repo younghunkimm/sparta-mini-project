@@ -1,9 +1,22 @@
-import { db, storage } from "../js/firebase-config.js"; 
+import { db, storage } from "../js/firebase-config.js";
 
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import { getDocs,  collectionGroup, doc, getDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-import { getDownloadURL, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
-import { getProfile } from "../js/introduction-basic.js";
+import {
+  collection,
+  addDoc,
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import {
+  getDocs,
+  collectionGroup,
+  doc,
+  getDoc,
+  orderBy,
+  query,
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
 $(document).ready(async function () {
   const name = getQueryParam("name");
@@ -11,17 +24,18 @@ $(document).ready(async function () {
 });
 
 $(document).ready(async function () {
-  console.log("준비");
-  // 모달 열기
-  $("#openModal").click(function () {
-    console.log("POST 모달 열기");
-    $("#postModal").css("display", "flex");
+  // console.log("준비");
+  // // 모달 열기
+  // $("#openModal").click(function () {
+  //   console.log("POST 모달 열기");
+  //   $("#postModal").css("display", "flex");
 
-    initializeSlider("123456");
-  });
+  //   // initializeSlider("123456");
+  // });
 
   // 닫기 버튼 클릭 시 모달 닫기
   $(".close").click(function () {
+    console.log("POST 모달 닫기");
     $("#postModal").css("display", "none");
   });
 });
@@ -65,7 +79,10 @@ async function uploadPost(content, author) {
     // 파일이 있다면 Firebase Storage에 업로드
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const storageRef = ref(storage, `posts/${author}/${Date.now()}_${file.name}`);
+      const storageRef = ref(
+        storage,
+        `posts/${author}/${Date.now()}_${file.name}`
+      );
       const snapshot = await uploadBytes(storageRef, file);
       const url = await getDownloadURL(snapshot.ref);
 
@@ -105,7 +122,7 @@ async function getPosts(name) {
     let name = getQueryParam("name");
     let mainImageUrl = doc.data().mainImageUrl;
 
-    const $postingList = $('#postingList');
+    const $postingList = $("#postingList");
     const tempHtml = `
         <div class="posting-image" data-id="${id}" data-name="${name}">
             <img src="${mainImageUrl}" alt="">
@@ -118,14 +135,32 @@ async function getPosts(name) {
   });
 }
 
-$(document).on('click', '.posting-image', async function() {
-    let $this = $(this);
+$(document).on("click", ".posting-image", async function () {
+  let $this = $(this);
 
-    const name = String($this.data().name);
-    const id = String($this.data().id);
-
-    await getPost(name, id);
+  const name = String($this.data().name);
+  const id = String($this.data().id);
+  console.log(name, " ", id);
+  await getPost(name, id);
+  await initializeSlider(name, id);
+  await getProfile(name);
 });
+
+async function getProfile(name) {
+  const querySnapshot = await getDocs(
+    collection(db, "profiles", name, "user_profile")
+  );
+
+  querySnapshot.forEach((doc) => {
+    const name = doc.data().name;
+    const profileImage = doc.data().profileImage;
+
+    console.log("프로필 : ", name, " ", profileImage);
+    // 🔽 HTML에 반영
+    $("#posting-name").text(name);
+    $("#posting-profile-image").attr("src", profileImage);
+  });
+}
 
 // 특정 게시글(postID) 하나만 가져오기
 async function getPost(name, postId) {
@@ -150,7 +185,8 @@ async function getPost(name, postId) {
 
     // 3. 본문 텍스트
     $(".post-text").html(data.content.replace(/\n/g, "<br>"));
-
+    $("#postModal").css("display", "flex");
+    
     // 5. 점(dot)도 다시 생성
     const dotsContainer = $("#dotsContainer");
     dotsContainer.empty();
@@ -161,16 +197,18 @@ async function getPost(name, postId) {
       );
     }
 
-    $('#postModal').show();
+    $("#postModal").show();
   } else {
     console.log("No such document!");
   }
 }
 
 // 이미지
-function initializeSlider(postId) {
-  getPost(postId).then(() => {
+async function initializeSlider(name, postId) {
+  console.log("TEST", postId)
+  getPost(name, postId).then(() => {
     // 슬라이드 초기화
+    
     let currentIndex = 0; // 현재 슬라이드 인덱스
     const slideWidth = $(".content-wrapper").width();
 
