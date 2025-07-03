@@ -100,16 +100,38 @@ async function getPosts(name) {
   allPost.forEach((doc) => {
     let content = doc.data().content;
     let author = doc.data().author;
+
+    let id = doc.id;
+    let name = getQueryParam("name");
+    let mainImageUrl = doc.data().mainImageUrl;
+
+    const $postingList = $('#postingList');
+    const tempHtml = `
+        <div class="posting-image" data-id="${id}" data-name="${name}">
+            <img src="${mainImageUrl}" alt="">
+        </div>
+    `;
+    $postingList.append(tempHtml);
+    // console.log(doc.data());
     //console.log(doc.id, "=>", doc.data());
-    console.log(doc.id, "=>", author, " ", content);
+    // console.log(doc.id, "=>", author, " ", content);
   });
 }
 
+$(document).on('click', '.posting-image', async function() {
+    let $this = $(this);
+
+    const name = String($this.data().name);
+    const id = String($this.data().id);
+
+    await getPost(name, id);
+});
+
 // 특정 게시글(postID) 하나만 가져오기
-async function getPost(postId) {
+async function getPost(name, postId) {
   console.log("포스팅 가져오기");
 
-  const docRef = doc(db, "posts", "원세영", "user_posts", postId);
+  const docRef = doc(db, "posts", name, "user_posts", postId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -138,6 +160,8 @@ async function getPost(postId) {
         `<span class="dot ${activeClass}" onclick="goToSlide(${i})"></span>`
       );
     }
+
+    $('#postModal').show();
   } else {
     console.log("No such document!");
   }
