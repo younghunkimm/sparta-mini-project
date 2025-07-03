@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+* {
+  font-family: "Lora", serif;
+}
+
 .upload-modal {
     display: none;
   justify-content: center;

@@ -1,11 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
-
-* {
-  font-family: "Lora", serif;
-}
-
 header {
-  background-color: black;
+  background-color: white;
 }
 
 h1 {
@@ -15,14 +9,15 @@ h1 {
   padding-top: 10px;
 }
 
-h1,
+header h1,
 a {
   text-decoration: none;
+  color: red;
 }
 
 .main {
   color: white;
-  background-image: url("https://live.staticflickr.com/1150/1228201000_e85c909b34_b.jpg");
+  background-image: url(../images/main-page.png);
   background-position: center;
   background-size: cover;
   text-align: center;
@@ -96,8 +91,10 @@ a {
   text-align: right;
   margin-right: 50px;
 }
-  width: auto;
-  margin: 70px 50px 50px 50px;
+
+.comments-section {
+  width: 1000px;
+  margin: 70px auto 50px auto;
   height: 700px;
   border: 1px solid #ddd;
   border-radius: 8px;
