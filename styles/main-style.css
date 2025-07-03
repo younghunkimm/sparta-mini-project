@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Edu+SA+Hand:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+* {
+  font-family: "Lora", serif;
+}
+
 header {
   background-color: black;
 }
@@ -16,7 +22,7 @@ a {
 
 .main {
   color: white;
-  background-image: url('https://live.staticflickr.com/1150/1228201000_e85c909b34_b.jpg');
+  background-image: url("https://live.staticflickr.com/1150/1228201000_e85c909b34_b.jpg");
   background-position: center;
   background-size: cover;
   text-align: center;
@@ -41,7 +47,7 @@ a {
   max-width: 18%;
   /* text-align: center; */
   padding: 10%;
-  border-radius: 10px;
+  border-radius: 50%;
   padding: 10px;
 
   display: flex;
@@ -50,11 +56,11 @@ a {
   align-items: center;
   text-align: center;
 
-  height: 350px;
+  height: 200px;
 }
 
 .mycard img {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .mycard p {
@@ -89,4 +95,15 @@ a {
 .plus-btn {
   text-align: right;
   margin-right: 50px;
+}
+  width: auto;
+  margin: 70px 50px 50px 50px;
+  height: 700px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
 }
