@@ -83,7 +83,6 @@ async function getPosts(name) {
         let gitAddress = doc.data().gitAddress;
         console.log(doc.id, "=>", name, " : ", profileImage);
 
-
         let temp_html = `
         <div class="mycard">
           <a href="http://127.0.0.1:5500/pages/introduction-basic.html?name=${name}&git=${gitAddress}">
@@ -94,7 +93,6 @@ async function getPosts(name) {
         </div>`
 
         $(".added-team-row").append(temp_html);
-
   });
 }
 
