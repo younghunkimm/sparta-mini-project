@@ -43,9 +43,10 @@
         <h1><a href="main-page.html">RETURN DREAM</a></h1>
     </header>
     <div class="profile-header" style="display: flex;">
-        <img src="https://health.chosun.com/site/data/img_dir/2025/04/08/2025040803041_0.jpg" class="profile-image">
+        <img src="https://health.chosun.com/site/data/img_dir/2025/04/08/2025040803041_0.jpg" id="profile-image"
+            class="profile-image">
         <div class="profile-info">
-            <h1>초 롱 이</h1>
+            <h1 id="profile-name">초 롱 이</h1>
             <div class="profile-button">
                 <button id="following" class="fw-bold btn btn-outline-dark">팔로잉</button><button id="LIKEBTN"
                     type="button" class="likebtnS fw-bold rounded-pill btn btn-outline-dark">
@@ -63,7 +64,7 @@
         </div>
         <div class="post">
             <div class="tags">
-                <a href="https://github.com/hanjsnote" class="gitbtn btn btn-outline-dark git-button"
+                <a href="https://github.com/hanjsnote" class="gitbtn btn btn-outline-dark git-button" id="github-link"
                     onmouseover="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F677nA%2FbtsOY8h4sVK%2FAAAAAAAAAAAAAAAAAAAAAJ8Y8ovhJGHzv_w-ws5rQ5vjvbnAUa-NRNszg6kfdEvY%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dg6LmbibdRQGR3%252F8caVvw7DHAXRE%253D'"
                     onmouseout="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdyHKrW%2FbtsOY3gRu1N%2FAAAAAAAAAAAAAAAAAAAAANfdlgUYRRM5qNO4ChXq6PlL19mSTikOpFmjA_RfmOLS%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dn8eFE8Wc2wnHJmCYfBb6aGDUlmA%253D'">
                     <img id="git-img"
@@ -72,6 +73,10 @@
                     <span class="fw-bold">GIT</span>
                 </a>
                 <button id="openUploadModal" class="fw-bold btn btn-outline-dark">업로드</button>
+            </div>
+            <div class="self_introduction" id="profile-content">
+                안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다.
+
             </div>
         </div>
     </div>
