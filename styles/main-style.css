@@ -85,3 +85,8 @@ a {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.plus-btn {
+  text-align: right;
+  margin-right: 50px;
+}
