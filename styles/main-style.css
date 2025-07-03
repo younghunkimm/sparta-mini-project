@@ -67,7 +67,8 @@ a {
   margin-top: auto;
 }
 
-.team-row {
+.team-row, 
+.added-team-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -105,3 +106,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+/* 
+.added-team-row {
+  display: flex;
+} */
