@@ -20,6 +20,24 @@
 </script>
 <script type="module" src="../js/posts.js"></script>
 
+<script type="module">
+    import { subscribeCount, updateLike } from "../js/likebtn.js";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyFromURL = urlParams.get("key");
+
+    const likeContainer = document.querySelector(".LIKE");
+    const keyFromDataAttr = likeContainer?.dataset.key;
+
+    const targetKey = keyFromURL || keyFromDataAttr || "LIKECOUNT";
+
+    subscribeCount(targetKey);
+
+    document.getElementById("LIKEBTN").addEventListener("click", () => {
+        updateLike(targetKey);
+    });
+</script>
+
 <body>
     <div class="profile-header" style="display: flex;">
         <img src="https://health.chosun.com/site/data/img_dir/2025/04/08/2025040803041_0.jpg" class="profile-image">
@@ -36,7 +54,7 @@
                 <span>팔로우 30</span>
             </div>
             <div class="tags">
-                <a href="https://github.com/hanjsnote" class="btn btn-outline-dark git-button"
+                <a href="https://github.com/hanjsnote" class="gitbtn btn btn-outline-dark git-button"
                     onmouseover="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F677nA%2FbtsOY8h4sVK%2FAAAAAAAAAAAAAAAAAAAAAJ8Y8ovhJGHzv_w-ws5rQ5vjvbnAUa-NRNszg6kfdEvY%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dg6LmbibdRQGR3%252F8caVvw7DHAXRE%253D'"
                     onmouseout="document.getElementById('git-img').src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdyHKrW%2FbtsOY3gRu1N%2FAAAAAAAAAAAAAAAAAAAAANfdlgUYRRM5qNO4ChXq6PlL19mSTikOpFmjA_RfmOLS%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3Dn8eFE8Wc2wnHJmCYfBb6aGDUlmA%253D'">
                     <img id="git-img"
@@ -44,7 +62,12 @@
                         alt="GitHub" style="height: 20px; vertical-align: middle;">
                     GIT
                 </a>
-                <span>♡좋아요</span>
+                <p class="LIKE">
+                    <button id="LIKEBTN" type="button" class="likebtnS rounded-pill btn btn-outline-dark">
+                        <span class="heartS" id="heart">♡</span> 좋아요
+                        <span id="count">0</span>
+                    </button>
+                </p>
             </div>
             <div class="self_introduction">
                 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다. 안녕하세요 개발자를 꿈꾸는 초롱이 입니다.
