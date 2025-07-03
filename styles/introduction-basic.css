@@ -103,14 +103,35 @@ hr {
 }
 
 .heartS {
-  color: red;
-  font-size: 1rem;
+    color: red;
+    margin-right: 2px;
 }
 
-.mypostingbox {
-  width: 500px;
-  margin: 20px auto;
-  border: 1px solid #eee;
-  padding: 20px;
-  border-radius: 5px;
+.likebtnS {
+    padding: 4px 10px;  
+    font-size: 18px;  
+    gap: 4px;
 }
+
+
+#postingList {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#postingList .posting-image {
+    width: calc(100% / 3 - 20px);
+    aspect-ratio: 1 / 1;
+
+    margin: 10px;
+}
+
+#postingList .posting-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+  font-size: 1rem;
