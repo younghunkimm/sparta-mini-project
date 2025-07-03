@@ -81,6 +81,7 @@ async function getPosts(name) {
         let name = doc.data().name;
         let profileImage = doc.data().profileImage;
         console.log(doc.id, "=>", name, " : ", profileImage);
+
   });
 }
 
