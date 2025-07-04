@@ -14,7 +14,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   //팔로워 수 처리
   const followers_value = document.getElementById("followers");
   const btn = document.getElementById("following");
-  const followerDocRef = doc(db, "followers", "followers_count"); //Firebase의 followers 컬렉션 안의 "followers_count" 문서를 가리킨다
+  // const followerDocRef = doc(db, "followers", "followers_count"); //Firebase의 followers 컬렉션 안의 "followers_count" 문서를 가리킨다
+  const targetUser = getQueryParam("name");
+  const followerDocRef = doc(db, "followers", targetUser);  //멤버 개개인별로 팔로워 카운팅되게 수정
   let followerCount = 500; //팔로워 수 초기값
   //firebase에서 현재 팔로워 수를 불러와서 currentCount에 저장하고 웹 화면에도 표시
   const followerSnap = await getDoc(followerDocRef);
