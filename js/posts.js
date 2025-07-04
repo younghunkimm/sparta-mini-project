@@ -121,6 +121,8 @@ async function getPosts(name) {
 
   const allPost = await getDocs(q);
 
+  $('#posting_val').text(allPost.size);
+
   allPost.forEach((doc) => {
     let content = doc.data().content;
     let author = doc.data().author;
