@@ -14,6 +14,7 @@ import {
     getDocs,
     setDoc,
     serverTimestamp,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 
@@ -57,19 +58,6 @@ export async function registerComment(targetId, commentText) {
         const createdCommentComment = docSnap.data().comment;
         const createdCommentLike = docSnap.data().like ?? 0; // like가 없으면 0으로 초기화
 
-        let tempHtml = `<li data-id="${createdCommentId}" data-target="${targetId}">
-            <p class="comment">${createdCommentComment}</p>
-        `;
-        if (targetId === "main") {
-            tempHtml += `<button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark" data-id="${createdCommentId}">
-                <span class="heart" data-id="${createdCommentId}">${createdCommentLike >= 1 ? "❤" : "♡"}</span>
-                <span class="count" data-id="${createdCommentId}">${createdCommentLike}</span>
-            </button>`;                            
-        }
-        tempHtml += `</li>`;
-
-        $('#commentList').append(tempHtml);
-
         $('#commentInput').val(''); // 댓글 입력창 초기화
 
         // 댓글의 스크롤 위치를 최하단으로 이동
@@ -97,9 +85,16 @@ export async function loadComments(targetId, callback) {
         ...conditions
     );
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(doc => {
-        callback(doc.data());
+    // 실시간 수신으로 변경
+    onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+                callback(change.doc.data());
+            }
+        });
+
+        // 댓글의 스크롤 위치를 최하단으로 이동
+        $('#commentList').scrollTop($('#commentList').prop("scrollHeight"));
     });
 }
 
