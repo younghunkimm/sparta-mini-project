@@ -154,7 +154,7 @@ $(document).on('click', '.posting-image', async function() {
   await getProfile(name);
 
     $commentList.empty(); // 댓글 목록 초기화
-    loadComments(id, (row) => {
+    await loadComments(id, (row) => {
         const id = row.id || "";
         const target = row.targetId || "main";
         const comment = row.comment;
@@ -162,13 +162,12 @@ $(document).on('click', '.posting-image', async function() {
 
         const tempHtml = `<li data-id="${id}" data-target="${target}">
                     <p class="comment">${comment}</p>
-                        <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark">
-                            <span class="heart">${like >= 1 ? "❤" : "♡"}</span>
-                            <span class="count">${like}</span>
-                        </button>
                 </li>`;
         $commentList.append(tempHtml);
     })
+
+    // 댓글의 스크롤 위치를 최하단으로 이동
+    $('#commentList').scrollTop($('#commentList').prop("scrollHeight"));
 });
 
 async function getProfile(name) {

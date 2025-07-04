@@ -57,13 +57,16 @@ export async function registerComment(targetId, commentText) {
         const createdCommentComment = docSnap.data().comment;
         const createdCommentLike = docSnap.data().like ?? 0; // like가 없으면 0으로 초기화
 
-        const tempHtml = `<li data-id="${createdCommentId}">
+        let tempHtml = `<li data-id="${createdCommentId}" data-target="${targetId}">
             <p class="comment">${createdCommentComment}</p>
-                <button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark" data-id="${createdCommentId}">
-                    <span class="heart" data-id="${createdCommentId}">${createdCommentLike >= 1 ? "❤" : "♡"}</span>
-                    <span class="count" data-id="${createdCommentId}">${createdCommentLike}</span>
-                </button>
-        </li>`;
+        `;
+        if (targetId === "main") {
+            tempHtml += `<button type="button" class="commentLikeBtn rounded-circle btn btn-outline-dark" data-id="${createdCommentId}">
+                <span class="heart" data-id="${createdCommentId}">${createdCommentLike >= 1 ? "❤" : "♡"}</span>
+                <span class="count" data-id="${createdCommentId}">${createdCommentLike}</span>
+            </button>`;                            
+        }
+        tempHtml += `</li>`;
 
         $('#commentList').append(tempHtml);
 
@@ -140,6 +143,8 @@ $(document).on("click", ".commentLikeBtn", async function () {
     const $this = $(this);
     const commentId = $this.closest('li').data("id");
     const commentTarget = $this.closest('li').data("target");
+
+    console.log(commentId, commentTarget);
 
     await updateLike(commentTarget, commentId);
 });
